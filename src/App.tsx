@@ -6,6 +6,9 @@ import { Resources } from './components/Resources';
 import { DataBooklet } from './components/DataBooklet';
 import { PracticePapers } from './components/PracticePapers';
 import { Tips } from './components/Tips';
+import { TableOfContents } from './components/TableOfContents';
+import { DarkModeToggle } from './components/DarkModeToggle';
+import { useDarkMode } from './context/DarkModeContext';
 
 const navItems = [
   { id: 'overview', label: 'Overview', icon: GraduationCap },
@@ -17,8 +20,10 @@ const navItems = [
 ];
 
 export default function App() {
+  const { isDark } = useDarkMode();
   const [activeSection, setActiveSection] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [tocOpen, setTocOpen] = useState(true);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -33,90 +38,131 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-200">
-                🧪
+    <div className={`min-h-screen ${isDark ? 'dark' : ''}`}>
+      <div className="dark:bg-slate-950 dark:text-white transition-colors">
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-200">
+                  🧪
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">Jonan's SJChO Study Notes</h1>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Singapore Junior Chemistry Olympiad</p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-lg font-bold text-slate-900 leading-tight">SJChO Study Notes</h1>
-                <p className="text-xs text-slate-500 hidden sm:block">Singapore Junior Chemistry Olympiad</p>
+
+              {/* Desktop Nav */}
+              <nav className="hidden lg:flex items-center gap-1">
+                {navItems.map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveSection(item.id)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeSection === item.id
+                          ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 shadow-sm'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <Icon size={16} />
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </nav>
+
+              {/* Right side: Dark mode toggle + Mobile menu */}
+              <div className="flex items-center gap-2">
+                <DarkModeToggle />
+                <button
+                  className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
               </div>
             </div>
+          </div>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
-              {navItems.map(item => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                      activeSection === item.id
-                        ? 'bg-blue-50 text-blue-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                    }`}
-                  >
-                    <Icon size={16} />
-                    {item.label}
-                  </button>
-                );
-              })}
-            </nav>
+          {/* Mobile Nav */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg">
+              <div className="px-4 py-3 space-y-1">
+                {navItems.map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => { setActiveSection(item.id); setMobileMenuOpen(false); }}
+                      className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                        activeSection === item.id
+                          ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <Icon size={18} />
+                      {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </header>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+        {/* Main Content with Sidebar */}
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Sidebar - TOC */}
+              <aside className="hidden lg:block">
+                <TableOfContents
+                  activeSection={activeSection}
+                  onNavigate={setActiveSection}
+                  isOpen={tocOpen}
+                />
+              </aside>
+
+              {/* Mobile TOC Toggle */}
+              <div className="lg:hidden mb-4">
+                <button
+                  onClick={() => setTocOpen(!tocOpen)}
+                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                >
+                  {tocOpen ? '📑 Hide' : '📑 Show'} Contents
+                </button>
+                {tocOpen && (
+                  <div className="mt-3">
+                    <TableOfContents
+                      activeSection={activeSection}
+                      onNavigate={setActiveSection}
+                      isOpen={tocOpen}
+                      onClose={() => setTocOpen(false)}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Main Content */}
+              <main className="lg:col-span-3">
+                {renderSection()}
+              </main>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Nav */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white shadow-lg">
-            <div className="px-4 py-3 space-y-1">
-              {navItems.map(item => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => { setActiveSection(item.id); setMobileMenuOpen(false); }}
-                    className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                      activeSection === item.id
-                        ? 'bg-blue-50 text-blue-700'
-                        : 'text-slate-600 hover:bg-slate-50'
-                    }`}
-                  >
-                    <Icon size={18} />
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
+        {/* Footer */}
+        <footer className="border-t border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 mt-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500 dark:text-slate-400">
+            <p>SJChO Study Notes — A comprehensive study resource for the Singapore Junior Chemistry Olympiad</p>
+            <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Based on GCE O-Level and A-Level Chemistry syllabi. Not affiliated with SNIC or MOE.</p>
           </div>
-        )}
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {renderSection()}
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white/50 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500">
-          <p>SJChO Study Notes — A comprehensive study resource for the Singapore Junior Chemistry Olympiad</p>
-          <p className="mt-1 text-xs text-slate-400">Based on GCE O-Level and A-Level Chemistry syllabi. Not affiliated with SNIC or MOE.</p>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }
