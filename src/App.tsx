@@ -6,7 +6,7 @@ import { Resources } from './components/Resources';
 import { DataBooklet } from './components/DataBooklet';
 import { PracticePapers } from './components/PracticePapers';
 import { Tips } from './components/Tips';
-import { SearchButton } from './components/SearchButton';
+import { GlobalTopicSearch } from './components/GlobalTopicSearch';
 import { SearchModal } from './components/SearchModal';
 import { SearchResult } from './data/searchIndex';
 
@@ -102,9 +102,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Desktop Nav + Search */}
-            <nav className="hidden lg:flex items-center gap-2">
-              <SearchButton onClick={() => setSearchOpen(true)} />
+            {/* Search Bar (hidden on mobile, shows on tablet+) */}
+            <div className="hidden md:flex md:flex-1 md:max-w-sm md:mx-4">
+              <GlobalTopicSearch onSectionChange={setActiveSection} />
+            </div>
+
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-1">
               {navItems.map(item => {
                 const Icon = item.icon;
                 return (
@@ -128,7 +132,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setSearchOpen(true)}
-                className="sm:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                 title="Search"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -161,6 +165,11 @@ export default function App() {
                 {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
+          </div>
+
+          {/* Mobile Search Bar */}
+          <div className="md:hidden pb-3">
+            <GlobalTopicSearch onSectionChange={setActiveSection} />
           </div>
         </div>
 

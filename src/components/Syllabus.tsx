@@ -1,76 +1,30 @@
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, BookOpen } from 'lucide-react';
 import { syllabusTopics } from '../data/syllabus';
-import { TopicSearch } from './TopicSearch';
+import { useSearch } from '../context/SearchContext';
 
 export function Syllabus() {
   const [expandedTopic, setExpandedTopic] = useState<string | null>(null);
   const [expandedConcept, setExpandedConcept] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchMatches, setSearchMatches] = useState<Set<string>>(new Set());
-  const [hasSearched, setHasSearched] = useState(false);
+  const { query, matches, hasSearched } = useSearch();
 
   const categories = ['All', ...Array.from(new Set(syllabusTopics.map(t => t.category)))];
   const filteredTopics = filterCategory === 'All' ? syllabusTopics : syllabusTopics.filter(t => t.category === filterCategory);
 
-  // Handle search
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    setHasSearched(query.length > 0);
-
-    if (query.length === 0) {
-      setSearchMatches(new Set());
-      setExpandedTopic(null);
-      return;
-    }
-
-    const lowerQuery = query.toLowerCase();
-    const matches = new Set<string>();
-    let firstMatch: string | null = null;
-
-    syllabusTopics.forEach(topic => {
-      // Check topic title
-      if (topic.title.toLowerCase().includes(lowerQuery)) {
-        matches.add(topic.id);
-        if (!firstMatch) firstMatch = topic.id;
+  // Auto-expand first match
+  useEffect(() => {
+    if (hasSearched && matches.size > 0) {
+      const firstMatch = Array.from(matches)[0];
+      if (firstMatch.startsWith('syllabus-')) {
+        const topicId = firstMatch.replace('syllabus-', '').split('-')[0];
+        setExpandedTopic(topicId);
       }
-
-      // Check concept titles
-      topic.keyConcepts.forEach((concept, idx) => {
-        if (concept.title.toLowerCase().includes(lowerQuery)) {
-          matches.add(topic.id);
-          matches.add(`${topic.id}-${idx}`);
-          if (!firstMatch) firstMatch = topic.id;
-        }
-      });
-    });
-
-    setSearchMatches(matches);
-
-    // Auto-expand first match
-    if (firstMatch) {
-      setExpandedTopic(firstMatch);
-      setTimeout(() => {
-        const element = document.getElementById(`topic-${firstMatch}`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 100);
     }
-  };
+  }, [hasSearched, matches]);
 
-  const handleClearSearch = () => {
-    setSearchQuery('');
-    setSearchMatches(new Set());
-    setHasSearched(false);
-    setExpandedTopic(null);
-  };
-
-  // Highlight text function
   const highlightText = (text: string, query: string) => {
-    if (!query || searchMatches.size === 0) return text;
-
+    if (!query || matches.size === 0) return text;
     const parts = text.split(new RegExp(`(${query})`, 'gi'));
     return parts.map((part, idx) =>
       part.toLowerCase() === query.toLowerCase()
@@ -91,14 +45,11 @@ export function Syllabus() {
         </p>
       </div>
 
-      {/* Search Bar */}
-      <TopicSearch onSearch={handleSearch} onClear={handleClearSearch} />
-
       {/* No Results Message */}
-      {hasSearched && searchMatches.size === 0 && (
+      {hasSearched && query && Array.from(matches).every(m => !m.startsWith('syllabus-')) && (
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
           <p className="text-amber-900 dark:text-amber-100 font-medium">
-            No matching topics found for "{searchQuery}"
+            No matching topics found for "{query}"
           </p>
           <p className="text-sm text-amber-800 dark:text-amber-200 mt-1">
             Try searching for other terms like "redox", "kinetics", or "equilibrium"
@@ -128,7 +79,7 @@ export function Syllabus() {
       {/* Topics */}
       <div className="space-y-4">
         {filteredTopics.map(topic => {
-          const isMatchedTopic = searchMatches.has(topic.id);
+          const isMatchedTopic = Array.from(matches).some(m => m.startsWith(`syllabus-${topic.id}`));
           const shouldShow = !hasSearched || isMatchedTopic;
 
           if (!shouldShow) return null;
@@ -141,8 +92,8 @@ export function Syllabus() {
               expandedConcept={expandedConcept}
               onToggle={() => setExpandedTopic(expandedTopic === topic.id ? null : topic.id)}
               onConceptToggle={(id) => setExpandedConcept(expandedConcept === id ? null : id)}
-              searchQuery={searchQuery}
-              searchMatches={searchMatches}
+              query={query}
+              matches={matches}
               highlightText={highlightText}
             />
           );
@@ -158,8 +109,8 @@ function TopicCard({
   expandedConcept, 
   onToggle, 
   onConceptToggle,
-  searchQuery,
-  searchMatches,
+  query,
+  matches,
   highlightText
 }: {
   topic: typeof syllabusTopics[0];
@@ -167,8 +118,8 @@ function TopicCard({
   expandedConcept: string | null;
   onToggle: () => void;
   onConceptToggle: (id: string) => void;
-  searchQuery: string;
-  searchMatches: Set<string>;
+  query: string;
+  matches: Set<string>;
   highlightText: (text: string, query: string) => string;
 }) {
   const categoryColors: Record<string, string> = {
@@ -178,13 +129,13 @@ function TopicCard({
     'Practical Chemistry': 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
   };
 
-  const isMatched = searchMatches.has(topic.id);
+  const isMatched = Array.from(matches).some(m => m.startsWith(`syllabus-${topic.id}`));
 
   return (
     <div 
       id={`topic-${topic.id}`}
       className={`bg-white dark:bg-slate-800 rounded-2xl border shadow-sm overflow-hidden transition-all ${
-        isMatched && searchQuery
+        isMatched && query
           ? 'border-yellow-300 dark:border-yellow-600 shadow-lg shadow-yellow-200/50 dark:shadow-yellow-900/30'
           : 'border-slate-200 dark:border-slate-700'
       }`}
@@ -199,7 +150,7 @@ function TopicCard({
             <h3 
               className="text-lg font-bold text-slate-900 dark:text-white"
               dangerouslySetInnerHTML={{
-                __html: highlightText(topic.title, searchQuery)
+                __html: highlightText(topic.title, query)
               }}
             />
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${categoryColors[topic.category] || 'bg-slate-50 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}>
@@ -217,13 +168,13 @@ function TopicCard({
           {topic.keyConcepts.map((concept, ci) => {
             const conceptId = `${topic.id}-${ci}`;
             const isOpen = expandedConcept === conceptId;
-            const isConceptMatched = searchMatches.has(conceptId);
+            const isConceptMatched = Array.from(matches).includes(`syllabus-${conceptId}`);
 
             return (
               <div 
                 key={ci} 
                 className={`border-b border-slate-50 dark:border-slate-700 last:border-b-0 transition-colors ${
-                  isConceptMatched && searchQuery ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
+                  isConceptMatched && query ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
                 }`}
               >
                 <button
@@ -236,7 +187,7 @@ function TopicCard({
                   <span 
                     className="text-sm font-semibold text-slate-800 dark:text-slate-200 flex-1"
                     dangerouslySetInnerHTML={{
-                      __html: highlightText(concept.title, searchQuery)
+                      __html: highlightText(concept.title, query)
                     }}
                   />
                   {isOpen ? <ChevronDown size={16} className="text-slate-400 dark:text-slate-500 shrink-0" /> : <ChevronRight size={16} className="text-slate-400 dark:text-slate-500 shrink-0" />}
@@ -244,7 +195,7 @@ function TopicCard({
                 {isOpen && (
                   <div className="px-5 md:px-6 pb-5 pl-14 md:pl-16">
                     <div className="prose prose-sm dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 whitespace-pre-line leading-relaxed">
-                      {renderContent(concept.content, searchQuery)}
+                      {renderContent(concept.content, query)}
                     </div>
                   </div>
                 )}
@@ -257,22 +208,20 @@ function TopicCard({
   );
 }
 
-function renderContent(content: string, searchQuery: string = '') {
+function renderContent(content: string, query: string = '') {
   const lines = content.split('\n');
   return lines.map((line, i) => {
-    // Process bold text
     let processed = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     
-    // Highlight search matches
-    if (searchQuery) {
+    if (query) {
       processed = processed.replace(
-        new RegExp(`(${searchQuery})`, 'gi'),
+        new RegExp(`(${query})`, 'gi'),
         `<mark style="background-color: #fef08a; font-weight: 600;">$1</mark>`
       );
     }
     
     if (line.startsWith('|')) {
-      return renderTable(lines, i, searchQuery);
+      return renderTable(lines, i, query);
     }
     if (line.trim() === '') {
       return <br key={i} />;
@@ -281,8 +230,7 @@ function renderContent(content: string, searchQuery: string = '') {
   });
 }
 
-function renderTable(lines: string[], startIndex: number, searchQuery: string = ''): React.ReactNode {
-  // Collect consecutive table lines
+function renderTable(lines: string[], startIndex: number, query: string = ''): React.ReactNode {
   const tableLines: string[] = [];
   let i = startIndex;
   while (i < lines.length && lines[i].startsWith('|')) {
@@ -291,7 +239,7 @@ function renderTable(lines: string[], startIndex: number, searchQuery: string = 
   }
 
   const rows = tableLines
-    .filter(line => !line.match(/^\|[\s-|]+\|$/)) // skip separator rows
+    .filter(line => !line.match(/^\|[\s-|]+\|$/))
     .map(line => line.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim()));
 
   if (rows.length === 0) return null;
