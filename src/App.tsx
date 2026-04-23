@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X } from 'lucide-react';
+import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X, ChevronLeft } from 'lucide-react';
 import { Overview } from './components/Overview';
 import { Syllabus } from './components/Syllabus';
 import { Resources } from './components/Resources';
@@ -63,11 +63,11 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen ${isDark ? 'dark' : ''}`}>
+    <div className="min-h-screen">
       <div className="dark:bg-slate-950 dark:text-white transition-colors">
         {/* Header */}
         <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-200">
@@ -149,41 +149,40 @@ export default function App() {
           )}
         </header>
 
-        {/* Main Content with Sidebar */}
+        {/* Main Content with Collapsible Sidebar */}
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-              {/* Sidebar - TOC */}
-              <aside className="hidden lg:block">
-                <TableOfContents
-                  activeSection={activeSection}
-                  onNavigate={setActiveSection}
-                  isOpen={tocOpen}
-                />
-              </aside>
-
-              {/* Mobile TOC Toggle */}
-              <div className="lg:hidden mb-4">
-                <button
-                  onClick={() => setTocOpen(!tocOpen)}
-                  className="w-full px-4 py-2 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-                >
-                  {tocOpen ? '📑 Hide' : '📑 Show'} Contents
-                </button>
+          <div className="max-w-full px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex gap-8">
+              {/* Sidebar - TOC (Collapsible Desktop + Mobile) */}
+              <aside 
+                className={`transition-all duration-300 flex-shrink-0 ${
+                  tocOpen 
+                    ? 'w-64' 
+                    : 'w-0'
+                }`}
+              >
                 {tocOpen && (
-                  <div className="mt-3">
+                  <div className="sticky top-20">
                     <TableOfContents
                       activeSection={activeSection}
                       onNavigate={setActiveSection}
                       isOpen={tocOpen}
-                      onClose={() => setTocOpen(false)}
                     />
                   </div>
                 )}
-              </div>
+              </aside>
+
+              {/* Collapse/Expand Button */}
+              <button
+                onClick={() => setTocOpen(!tocOpen)}
+                className="hidden lg:flex items-center justify-center flex-shrink-0 w-10 h-10 mt-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors group"
+                title={tocOpen ? 'Hide contents' : 'Show contents'}
+              >
+                <ChevronLeft size={20} className={`transition-transform ${tocOpen ? '' : 'rotate-180'}`} />
+              </button>
 
               {/* Main Content */}
-              <main className="lg:col-span-3">
+              <main className="flex-1 min-w-0">
                 {renderSection()}
               </main>
             </div>
@@ -192,7 +191,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="border-t border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 mt-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500 dark:text-slate-400">
+          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-sm text-slate-500 dark:text-slate-400">
             <p>SJChO Study Notes — A comprehensive study resource for the Singapore Junior Chemistry Olympiad</p>
             <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Based on GCE O-Level and A-Level Chemistry syllabi. Not affiliated with SNIC or MOE.</p>
           </div>

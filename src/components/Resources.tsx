@@ -11,7 +11,8 @@ const resourceCategories = [
         level: "Foundation",
         stars: 5,
         description: "Your starting point. Master all O-Level content first — roughly 10% of SJChO questions are directly from the O-Level syllabus.",
-        tags: ["O-Level", "Essential"]
+        tags: ["O-Level", "Essential"],
+        url: "https://www.amazon.sg/s?k=O+Level+Chemistry+Textbook"
       },
       {
         name: "A Level H2 Chemistry Key Concepts",
@@ -19,7 +20,8 @@ const resourceCategories = [
         level: "Core",
         stars: 5,
         description: "A concise summary of H2 Chemistry topics. Multiple SJChO Gold medalists recommend this book. Available at Popular bookstores in Singapore.",
-        tags: ["A-Level H2", "Highly Recommended"]
+        tags: ["A-Level H2", "Highly Recommended"],
+        url: "https://www.popular.com.sg/search?q=A+Level+Chemistry"
       },
       {
         name: "Chemistry (Zumdahl & Zumdahl)",
@@ -27,7 +29,8 @@ const resourceCategories = [
         level: "Advanced",
         stars: 5,
         description: "College-level general chemistry textbook. Excellent for stoichiometry, equilibrium, acid-base, and thermodynamics. Clear explanations with worked problems.",
-        tags: ["College-Level", "Olympiad Standard"]
+        tags: ["College-Level", "Olympiad Standard"],
+        url: "https://www.amazon.sg/s?k=Zumdahl+Chemistry"
       },
       {
         name: "Chemical Principles (Atkins & Jones)",
@@ -35,7 +38,8 @@ const resourceCategories = [
         level: "Advanced",
         stars: 4,
         description: "Another excellent college-level text. Strong on physical chemistry topics and atomic structure. Good alternative to Zumdahl.",
-        tags: ["College-Level", "Physical Chemistry"]
+        tags: ["College-Level", "Physical Chemistry"],
+        url: "https://www.amazon.sg/s?k=Atkins+Chemical+Principles"
       },
       {
         name: "Theory and Problems for Chemistry Olympiad",
@@ -43,7 +47,8 @@ const resourceCategories = [
         level: "Olympiad",
         stars: 5,
         description: "Written by an IChO Gold Medalist and Singapore's IChO head mentor. Covers challenging concepts with olympiad-style problems. Published by World Scientific.",
-        tags: ["Olympiad", "Singapore-Specific"]
+        tags: ["Olympiad", "Singapore-Specific"],
+        url: "https://www.worldscientific.com/worldscibooks/10.1142/8264"
       },
       {
         name: "Organic Chemistry as a Second Language (Klein)",
@@ -51,7 +56,8 @@ const resourceCategories = [
         level: "Organic Chemistry",
         stars: 5,
         description: "The best introduction to organic chemistry mechanisms and thinking. Very readable. Helps enormously with SJChO organic questions.",
-        tags: ["Organic", "Beginner-Friendly"]
+        tags: ["Organic", "Beginner-Friendly"],
+        url: "https://www.amazon.sg/s?k=Organic+Chemistry+Second+Language+Klein"
       },
     ]
   },
@@ -65,7 +71,8 @@ const resourceCategories = [
         level: "A-Level H2/H3",
         stars: 5,
         description: "Recommended by multiple SJChO participants on r/SGExams. Covers A-Level content relevant to SJChO in a clear, Singapore-context manner.",
-        tags: ["Singapore", "A-Level"]
+        tags: ["Singapore", "A-Level"],
+        url: "https://www.youtube.com/@bernardng1234"
       },
       {
         name: "The Organic Chemistry Tutor",
@@ -73,7 +80,8 @@ const resourceCategories = [
         level: "All Levels",
         stars: 5,
         description: "Massive library covering everything from stoichiometry to organic chemistry. His acid-base, kinetics, and equilibrium videos are particularly relevant.",
-        tags: ["Comprehensive", "Free"]
+        tags: ["Comprehensive", "Free"],
+        url: "https://www.youtube.com/@theorganicchemistrytutor"
       },
       {
         name: "Khan Academy (Chemistry)",
@@ -81,7 +89,8 @@ const resourceCategories = [
         level: "Foundation to Advanced",
         stars: 4,
         description: "Structured course with practice problems. Great for building foundational understanding. Covers AP Chemistry content which overlaps with SJChO.",
-        tags: ["Structured", "Free"]
+        tags: ["Structured", "Free"],
+        url: "https://www.khanacademy.org/science/chemistry"
       },
       {
         name: "NileRed",
@@ -89,7 +98,8 @@ const resourceCategories = [
         level: "Enrichment",
         stars: 4,
         description: "Fascinating chemistry experiments and demonstrations. Builds chemical intuition and enthusiasm. Recommended by past SJChO participants for background knowledge.",
-        tags: ["Experimental", "Enrichment"]
+        tags: ["Experimental", "Enrichment"],
+        url: "https://www.youtube.com/@NileRed"
       },
       {
         name: "Professor Dave Explains",
@@ -97,7 +107,8 @@ const resourceCategories = [
         level: "A-Level",
         stars: 4,
         description: "Clear, concise explanations of chemistry concepts. Good for quick topic reviews, especially for bonding, kinetics, and thermodynamics.",
-        tags: ["Concise", "Free"]
+        tags: ["Concise", "Free"],
+        url: "https://www.youtube.com/@ProfessorDaveExplains"
       },
       {
         name: "Chemiolis",
@@ -105,7 +116,8 @@ const resourceCategories = [
         level: "Olympiad",
         stars: 4,
         description: "Recommended by SJChO participants. Covers more advanced chemistry topics relevant to olympiad preparation.",
-        tags: ["Olympiad", "Advanced"]
+        tags: ["Olympiad", "Advanced"],
+        url: "https://www.youtube.com/@Chemiolis"
       },
     ]
   },
@@ -119,7 +131,8 @@ const resourceCategories = [
         level: "Official",
         stars: 5,
         description: "Download past Round 1 questions and Round 2 sample tasks with model answers. Essential practice material directly from the organisers.",
-        tags: ["Official", "Past Papers"]
+        tags: ["Official", "Past Papers"],
+        url: "https://www.snic.org.sg"
       },
       {
         name: "Grail (grail.com)",
@@ -127,7 +140,8 @@ const resourceCategories = [
         level: "A-Level H2/H3",
         stars: 4,
         description: "Online notes and resources for A-Level H2 and H3 Chemistry. Recommended by past SJChO participants for studying beyond O-Level.",
-        tags: ["A-Level", "Notes"]
+        tags: ["A-Level", "Notes"],
+        url: "https://grail.com"
       },
       {
         name: "LibreTexts Chemistry",
@@ -135,7 +149,8 @@ const resourceCategories = [
         level: "College-Level",
         stars: 4,
         description: "Free, comprehensive chemistry textbook library. Reference-quality explanations and worked examples for any topic.",
-        tags: ["Reference", "Free"]
+        tags: ["Reference", "Free"],
+        url: "https://chem.libretexts.org"
       },
       {
         name: "MIT OpenCourseWare",
@@ -143,7 +158,8 @@ const resourceCategories = [
         level: "Advanced",
         stars: 4,
         description: "Free MIT lecture notes, problem sets, and exams. Great for physical chemistry and more challenging practice problems.",
-        tags: ["University-Level", "Free"]
+        tags: ["University-Level", "Free"],
+        url: "https://ocw.mit.edu/search/?q=chemistry"
       },
       {
         name: "exams.sg Library",
@@ -151,7 +167,8 @@ const resourceCategories = [
         level: "O/A-Level",
         stars: 4,
         description: "Community-curated library of O-Level and A-Level study resources. Includes notes, summaries, and practice materials shared by students.",
-        tags: ["Community", "Singapore"]
+        tags: ["Community", "Singapore"],
+        url: "https://www.reddit.com/r/sgexams/"
       },
     ]
   },
@@ -165,7 +182,8 @@ const resourceCategories = [
         level: "Foundation",
         stars: 4,
         description: "Start here. Ensure you have complete mastery of all O-Level chemistry before attempting more advanced material.",
-        tags: ["O-Level", "Essential"]
+        tags: ["O-Level", "Essential"],
+        url: "https://www.seab.gov.sg/home/examinations/past-examination-papers"
       },
       {
         name: "A-Level H2 Chemistry TYS",
@@ -173,7 +191,8 @@ const resourceCategories = [
         level: "Core",
         stars: 5,
         description: "Most SJChO Round 1 questions are at A-Level standard. Working through A-Level TYS is highly effective preparation.",
-        tags: ["A-Level", "Highly Recommended"]
+        tags: ["A-Level", "Highly Recommended"],
+        url: "https://www.seab.gov.sg/home/examinations/past-examination-papers"
       },
       {
         name: "USNCO Local Exam Past Papers",
@@ -181,7 +200,8 @@ const resourceCategories = [
         level: "Olympiad",
         stars: 5,
         description: "Free 60-question MCQ papers from the US Chemistry Olympiad. Very similar format and difficulty to SJChO Round 1. Available from 2000 onwards.",
-        tags: ["Olympiad", "MCQ Practice", "Free"]
+        tags: ["Olympiad", "MCQ Practice", "Free"],
+        url: "https://www.acs.org/education/students/highschool/olympiad/usco.html"
       },
       {
         name: "UK Chemistry Olympiad Past Papers",
@@ -189,7 +209,8 @@ const resourceCategories = [
         level: "Olympiad",
         stars: 4,
         description: "Written papers from the UK Chemistry Olympiad. Good for practicing free-response questions and Round 2-style problems.",
-        tags: ["Olympiad", "FRQ Practice", "Free"]
+        tags: ["Olympiad", "FRQ Practice", "Free"],
+        url: "https://www.rsc.org/learn/collections/chemistry-olympiad"
       },
       {
         name: "IChO Preparatory Problems",
@@ -197,7 +218,8 @@ const resourceCategories = [
         level: "Advanced",
         stars: 4,
         description: "Preparatory problems from the International Chemistry Olympiad. Very challenging — only for students aiming for Gold.",
-        tags: ["International", "Challenging"]
+        tags: ["International", "Challenging"],
+        url: "https://www.icho-official.org"
       },
     ]
   }
