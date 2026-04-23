@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X, Play } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X } from 'lucide-react';
 import { Overview } from './components/Overview';
 import { Syllabus } from './components/Syllabus';
 import { Resources } from './components/Resources';
 import { DataBooklet } from './components/DataBooklet';
 import { PracticePapers } from './components/PracticePapers';
 import { Tips } from './components/Tips';
-import { Videos } from './components/Videos';
 import { TableOfContents } from './components/TableOfContents';
 import { DarkModeToggle } from './components/DarkModeToggle';
+import { SearchButton } from './components/SearchButton';
+import { SearchModal } from './components/SearchModal';
 import { useDarkMode } from './context/DarkModeContext';
+import { SearchResult } from './data/searchIndex';
 
 const navItems = [
   { id: 'overview', label: 'Overview', icon: GraduationCap },
   { id: 'syllabus', label: 'Syllabus & Notes', icon: BookOpen },
   { id: 'resources', label: 'Study Resources', icon: BookMarked },
-  { id: 'videos', label: 'Videos', icon: Play },
   { id: 'databooklet', label: 'Data Booklet', icon: FileText },
   { id: 'practice', label: 'Practice Papers', icon: FlaskConical },
   { id: 'tips', label: 'General Tips', icon: Lightbulb },
@@ -26,13 +27,34 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [tocOpen, setTocOpen] = useState(true);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Handle keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleSearchSelect = (result: SearchResult) => {
+    if (result.id.startsWith('syllabus')) {
+      setActiveSection('syllabus');
+    } else if (result.id.startsWith('databooklet')) {
+      setActiveSection('databooklet');
+    }
+  };
 
   const renderSection = () => {
     switch (activeSection) {
       case 'overview': return <Overview />;
       case 'syllabus': return <Syllabus />;
       case 'resources': return <Resources />;
-      case 'videos': return <Videos />;
       case 'databooklet': return <DataBooklet />;
       case 'practice': return <PracticePapers />;
       case 'tips': return <Tips />;
@@ -44,7 +66,7 @@ export default function App() {
     <div className={`min-h-screen ${isDark ? 'dark' : ''}`}>
       <div className="dark:bg-slate-950 dark:text-white transition-colors">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-sm">
+        <header className="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-700/60 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
@@ -57,8 +79,9 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Desktop Nav */}
-              <nav className="hidden lg:flex items-center gap-1">
+              {/* Desktop Nav + Search */}
+              <nav className="hidden lg:flex items-center gap-2">
+                <SearchButton onClick={() => setSearchOpen(true)} />
                 {navItems.map(item => {
                   const Icon = item.icon;
                   return (
@@ -80,6 +103,15 @@ export default function App() {
 
               {/* Right side: Dark mode toggle + Mobile menu */}
               <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setSearchOpen(true)}
+                  className="sm:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  title="Search"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
                 <DarkModeToggle />
                 <button
                   className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -165,6 +197,13 @@ export default function App() {
             <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">Based on GCE O-Level and A-Level Chemistry syllabi. Not affiliated with SNIC or MOE.</p>
           </div>
         </footer>
+
+        {/* Search Modal */}
+        <SearchModal
+          isOpen={searchOpen}
+          onClose={() => setSearchOpen(false)}
+          onSelectResult={handleSearchSelect}
+        />
       </div>
     </div>
   );

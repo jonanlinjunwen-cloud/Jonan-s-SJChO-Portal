@@ -1,5 +1,5 @@
 import { syllabusTopics } from './syllabus';
-import { dataBookletData } from './dataBooklet';
+import { dataBooklet } from './dataBooklet';
 
 export interface SearchResult {
   id: string;
@@ -47,20 +47,22 @@ export function buildSearchIndex(): SearchResult[] {
   });
 
   // Index data booklet items
-  dataBookletData?.sections?.forEach(section => {
+  dataBooklet?.sections?.forEach(section => {
     results.push({
-      id: `databooklet-${section.id}`,
+      id: `databooklet-${section.title.toLowerCase().replace(/\s+/g, '-')}`,
       title: section.title,
-      content: section.description || '',
+      content: '',
       section: 'Data Booklet',
       icon: '📋',
     });
 
     section.items?.forEach(item => {
+      const itemLabel = (item as any).name || (item as any).label || '';
+      const itemValue = (item as any).value || (item as any).formula || '';
       results.push({
-        id: `databooklet-${section.id}-${item.id || item.label}`,
-        title: `${section.title} → ${item.label}`,
-        content: item.value || '',
+        id: `databooklet-${section.title}-${itemLabel}`,
+        title: `${section.title} → ${itemLabel}`,
+        content: itemValue,
         section: 'Data Booklet',
         icon: '📋',
       });
