@@ -824,7 +824,7 @@ Examples: H⁺, Br₂, NO₂⁺, CH₃⁺
   {
     id: "inorganic",
     title: "Inorganic Chemistry",
-    icon: "🧪",
+    icon: " periodic_table",
     category: "Inorganic Chemistry",
     description: "Periodic trends, Group chemistry, qualitative analysis, and transition metals.",
     keyConcepts: [

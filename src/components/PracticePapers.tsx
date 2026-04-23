@@ -93,8 +93,24 @@ const practicePapers = [
     ]
   },
   {
-    category: "🧪 Other Countries' Practice Papers",
-    description: "Additional practice from chemistry competitions worldwide. Great for broadening your problem-solving skills.",
+    category: "🌍 International Chemistry Olympiad (IChO)",
+    description: "For students aiming for Gold — very challenging but excellent for pushing your limits.",
+    difficulty: "Advanced Olympiad",
+    papers: [
+      {
+        name: "IChO Preparatory Problems",
+        source: "IChO Official",
+        url: "https://www.icho-official.org/",
+        description: "Published annually by the host country. These are the most challenging problems available. Topics span all areas of chemistry at university level.",
+        difficulty: 5,
+        format: "Theoretical + Practical",
+        relevance: "⭐⭐⭐ — For Gold-seekers only",
+      },
+    ]
+  },
+  {
+    category: "🧪 Other Countries' Olympiad Papers",
+    description: "Additional practice from chemistry olympiads worldwide. Great for broadening your problem-solving skills.",
     difficulty: "Varies",
     papers: [
       {
@@ -107,10 +123,10 @@ const practicePapers = [
         relevance: "⭐⭐⭐ — Good supplementary practice",
       },
       {
-        name: "Australian Chemistry Competition",
+        name: "Australian Chemistry Olympiad",
         source: "Australian Science Innovations",
         url: "https://www.asi.edu.au/programs/australian-chemistry-olympiad/",
-        description: "Another good source of chemistry practice problems with a different perspective.",
+        description: "Another good source of olympiad-level chemistry problems with a different perspective.",
         difficulty: 4,
         format: "Written exam",
         relevance: "⭐⭐⭐ — Good supplementary practice",
@@ -128,7 +144,7 @@ export function PracticePapers() {
           <h2 className="text-2xl font-bold text-slate-900">Practice Papers & Past Exams</h2>
         </div>
         <p className="text-slate-500 mt-1">
-          The best way to prepare for SJChO is to practice with papers of similar style and difficulty.
+          The best way to prepare for SJChO is to practice with papers of similar style and difficulty. 
           Here are the closest matches ranked by relevance.
         </p>
       </div>
@@ -139,8 +155,8 @@ export function PracticePapers() {
         <div>
           <p className="text-sm font-semibold text-amber-800">Important Note</p>
           <p className="text-sm text-amber-700 mt-1">
-            SJChO does NOT publicly release all past papers. The SNIC website provides some sample questions.
-            USNCO Local Exams are the <strong>best freely available substitute</strong> — they have nearly identical format,
+            SJChO does NOT publicly release all past papers. The SNIC website provides some sample questions. 
+            USNCO Local Exams are the <strong>best freely available substitute</strong> — they have nearly identical format, 
             topic coverage, and difficulty level.
           </p>
         </div>

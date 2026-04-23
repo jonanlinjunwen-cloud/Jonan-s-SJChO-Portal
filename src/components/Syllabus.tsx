@@ -28,10 +28,11 @@ export function Syllabus() {
           <button
             key={cat}
             onClick={() => setFilterCategory(cat)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filterCategory === cat
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              filterCategory === cat
                 ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
                 : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-              }`}
+            }`}
           >
             {cat}
           </button>
@@ -127,7 +128,7 @@ function renderContent(content: string) {
   return lines.map((line, i) => {
     // Process bold text
     const processed = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
+    
     if (line.startsWith('|')) {
       return renderTable(lines, i);
     }
