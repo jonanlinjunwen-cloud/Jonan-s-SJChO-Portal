@@ -287,13 +287,24 @@ export function Resources() {
                   </div>
                 </div>
                 <p className="text-sm text-slate-600 mt-3 leading-relaxed">{res.description}</p>
-                <div className="flex flex-wrap gap-1.5 mt-3">
+                <div className="flex flex-wrap gap-1.5 mt-3 mb-3">
                   {res.tags.map((tag, ti) => (
                     <span key={ti} className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-medium">
                       {tag}
                     </span>
                   ))}
                 </div>
+                {res.url && (
+                  <a
+                    href={res.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-medium transition-colors"
+                  >
+                    <span>Visit</span>
+                    <ExternalLink size={12} />
+                  </a>
+                )}
               </div>
             ))}
           </div>
