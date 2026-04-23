@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X } from 'lucide-react';
+import { BookOpen, FlaskConical, FileText, BookMarked, Lightbulb, GraduationCap, Menu, X, Play } from 'lucide-react';
 import { Overview } from './components/Overview';
 import { Syllabus } from './components/Syllabus';
 import { Resources } from './components/Resources';
 import { DataBooklet } from './components/DataBooklet';
 import { PracticePapers } from './components/PracticePapers';
 import { Tips } from './components/Tips';
+import { Videos } from './components/Videos';
 import { TableOfContents } from './components/TableOfContents';
 import { DarkModeToggle } from './components/DarkModeToggle';
 import { useDarkMode } from './context/DarkModeContext';
@@ -14,6 +15,7 @@ const navItems = [
   { id: 'overview', label: 'Overview', icon: GraduationCap },
   { id: 'syllabus', label: 'Syllabus & Notes', icon: BookOpen },
   { id: 'resources', label: 'Study Resources', icon: BookMarked },
+  { id: 'videos', label: 'Videos', icon: Play },
   { id: 'databooklet', label: 'Data Booklet', icon: FileText },
   { id: 'practice', label: 'Practice Papers', icon: FlaskConical },
   { id: 'tips', label: 'General Tips', icon: Lightbulb },
@@ -30,6 +32,7 @@ export default function App() {
       case 'overview': return <Overview />;
       case 'syllabus': return <Syllabus />;
       case 'resources': return <Resources />;
+      case 'videos': return <Videos />;
       case 'databooklet': return <DataBooklet />;
       case 'practice': return <PracticePapers />;
       case 'tips': return <Tips />;
