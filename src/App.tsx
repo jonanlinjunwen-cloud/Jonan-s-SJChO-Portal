@@ -43,7 +43,7 @@ export default function App() {
                 🧪
               </div>
               <div>
-                <h1 className="text-lg font-bold text-slate-900 leading-tight">SJChO Study Notes</h1>
+                <h1 className="text-lg font-bold text-slate-900 leading-tight">Jonan's SJChO Study Notes</h1>
                 <p className="text-xs text-slate-500 hidden sm:block">Singapore Junior Chemistry Olympiad</p>
               </div>
             </div>
@@ -56,11 +56,10 @@ export default function App() {
                   <button
                     key={item.id}
                     onClick={() => setActiveSection(item.id)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                      activeSection === item.id
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeSection === item.id
                         ? 'bg-blue-50 text-blue-700 shadow-sm'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                    }`}
+                      }`}
                   >
                     <Icon size={16} />
                     {item.label}
@@ -89,11 +88,10 @@ export default function App() {
                   <button
                     key={item.id}
                     onClick={() => { setActiveSection(item.id); setMobileMenuOpen(false); }}
-                    className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                      activeSection === item.id
+                    className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm font-medium transition-all ${activeSection === item.id
                         ? 'bg-blue-50 text-blue-700'
                         : 'text-slate-600 hover:bg-slate-50'
-                    }`}
+                      }`}
                   >
                     <Icon size={18} />
                     {item.label}

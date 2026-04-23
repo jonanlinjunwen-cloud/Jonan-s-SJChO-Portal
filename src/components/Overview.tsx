@@ -16,7 +16,7 @@ export function Overview() {
             Singapore Junior<br />Chemistry Olympiad
           </h1>
           <p className="text-blue-100 text-lg max-w-2xl leading-relaxed">
-            A comprehensive study guide covering all topics, formulas, resources, and strategies 
+            A comprehensive study guide covering all topics, formulas, resources, and strategies
             to excel in the SJChO — from O-Level foundations to A-Level extensions.
           </p>
           <div className="flex flex-wrap gap-4 mt-8">
@@ -44,13 +44,12 @@ export function Overview() {
             <h3 className="text-lg font-bold text-slate-900">What is SJChO?</h3>
           </div>
           <p className="text-sm text-slate-600 leading-relaxed">
-            The <strong>Singapore Junior Chemistry Olympiad (SJChO)</strong> is a national chemistry competition 
-            for secondary school students (Sec 3–5), organised by the <strong>Singapore National Institute of 
-            Chemistry (SNIC)</strong> in partnership with NUS, NTU, SUTD, and IMRE, with MOE support.
+            The <strong>Singapore Junior Chemistry Olympiad (SJChO)</strong> is a national chemistry competition
+            for secondary school students (Sec 3–5), organised by the <strong>Singapore National Institute of
+              Chemistry (SNIC)</strong> in partnership with NUS, NTU, SUTD, and IMRE, with MOE support.
           </p>
           <p className="text-sm text-slate-600 leading-relaxed mt-2">
-            It seeks to promote excitement in learning Chemistry and identify talented young chemists 
-            for the national olympiad pathway: <strong>SJChO → SChO → IChO</strong>.
+            It seeks to promote excitement in learning Chemistry and identify talented young chemists.
           </p>
         </div>
 

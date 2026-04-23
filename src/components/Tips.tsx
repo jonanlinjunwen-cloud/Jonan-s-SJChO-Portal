@@ -11,7 +11,7 @@ const tipSections = [
       },
       {
         heading: "Focus on Understanding, Not Memorisation",
-        detail: "SJChO tests analytical reasoning and creative application, not rote knowledge. Understand WHY reactions happen, not just WHAT happens. Be able to apply concepts to unfamiliar situations — this is the hallmark of olympiad questions."
+        detail: "SJChO tests analytical reasoning and creative application, not rote knowledge. Understand WHY reactions happen, not just WHAT happens. Be able to apply concepts to unfamiliar situations ."
       },
       {
         heading: "Learn Key A-Level Topics Early",
@@ -19,7 +19,7 @@ const tipSections = [
       },
       {
         heading: "Build a Study Schedule",
-        detail: "Start preparing at least 3-4 months before the competition (ideally January for a May exam). Dedicate 2-3 hours per week to olympiad preparation, with more time in the final month. Alternate between learning new content and practicing past papers."
+        detail: "Start preparing at least 3-4 months before the competition . Dedicate 2-3 hours per week to preparation, with more time in the final month. Alternate between learning new content and practicing past papers."
       },
     ]
   },
@@ -40,12 +40,12 @@ const tipSections = [
         detail: "VSEPR theory, intermolecular forces, and lattice energy are very commonly tested. Make sure you can draw molecular shapes, predict bond angles (and explain deviations), and compare properties based on bonding type."
       },
       {
-        heading: "Spectroscopy — Prepare for Round 2",
-        detail: "Raman spectroscopy, UV-vis spectroscopy, and IR spectroscopy have appeared in recent Round 2 papers (at H3 standard). While you don't need to be an expert, understanding the basics of what each technique measures and how to interpret simple spectra will give you a significant advantage."
+        heading: "Spectroscopy — Important Topic",
+        detail: "Raman spectroscopy, UV-vis spectroscopy, and IR spectroscopy have appeared in recent Round 2 papers . Understanding understanding the basics of what each technique measures and how to interpret simple spectra will be helpful."
       },
       {
-        heading: "Transition Metals — Don't Neglect This",
-        detail: "Crystal field theory, complex ion formation, and ligand substitution are common A-Level extension topics in SJChO. Learn the common transition metal ions, their colours, and how to draw complex ion structures."
+        heading: "Transition Metals — Important Topic",
+        detail: "Crystal field theory, complex ion formation, and ligand substitution are important topics. Learn the common transition metal ions, their colours, and how to draw complex ion structures."
       },
     ]
   },
@@ -107,11 +107,11 @@ const tipSections = [
       },
       {
         heading: "Every Mark Counts — Even Participation Has Value",
-        detail: "The olympiad pathway is SJChO → SChO → IChO. Even a participation certificate shows initiative. The experience of taking a challenging chemistry paper builds exam skills that help with O-Levels and A-Levels."
+        detail: "The experience of taking a challenging chemistry paper builds exam skills that help with O-Levels and A-Levels."
       },
       {
         heading: "Stay Curious, Not Just Competitive",
-        detail: "The students who perform best in chemistry olympiads are genuinely curious about chemistry. Watch NileRed videos, read chemistry news, explore beyond the syllabus. This deepens your understanding in ways that pure studying cannot."
+        detail: "The students who perform best genuinely curious about chemistry. Watch NileRed videos, read chemistry news, explore beyond the syllabus. This deepens your understanding in ways that pure studying cannot."
       },
       {
         heading: "Learn from Your Mistakes",
@@ -141,7 +141,7 @@ export function Tips() {
           <h2 className="text-2xl font-bold text-slate-900">General Tips & Strategies</h2>
         </div>
         <p className="text-slate-500 mt-1">
-          Practical advice from past SJChO medalists, chemistry olympiad trainers, and experienced educators.
+          Practical advice from experienced educators and chemistry experts.
         </p>
       </div>
 

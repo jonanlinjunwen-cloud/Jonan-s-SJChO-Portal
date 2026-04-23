@@ -38,12 +38,6 @@ const resourceCategories = [
         tags: ["College-Level", "Physical Chemistry"]
       },
       {
-        name: "Theory and Problems for Chemistry Olympiad",
-        author: "Nan Zhihan & Dr Zhang Sheng (NUS)",
-        level: "Olympiad",
-        stars: 5,
-        description: "Written by an IChO Gold Medalist and Singapore's IChO head mentor. Covers challenging concepts with olympiad-style problems. Published by World Scientific.",
-        tags: ["Olympiad", "Singapore-Specific"]
       },
       {
         name: "Organic Chemistry as a Second Language (Klein)",
@@ -104,7 +98,7 @@ const resourceCategories = [
         author: "YouTube",
         level: "Olympiad",
         stars: 4,
-        description: "Recommended by SJChO participants. Covers more advanced chemistry topics relevant to olympiad preparation.",
+        description: "Recommended by SJChO participants. Covers more advanced chemistry topics for deeper understanding.",
         tags: ["Olympiad", "Advanced"]
       },
     ]
@@ -192,12 +186,6 @@ const resourceCategories = [
         tags: ["Olympiad", "FRQ Practice", "Free"]
       },
       {
-        name: "IChO Preparatory Problems",
-        author: "icho-official.org",
-        level: "Advanced",
-        stars: 4,
-        description: "Preparatory problems from the International Chemistry Olympiad. Very challenging — only for students aiming for Gold.",
-        tags: ["International", "Challenging"]
       },
     ]
   }
@@ -212,7 +200,7 @@ export function Resources() {
           <h2 className="text-2xl font-bold text-slate-900">Best Study Resources</h2>
         </div>
         <p className="text-slate-500 mt-1">
-          Curated resources recommended by past SJChO medalists and chemistry olympiad experts. 
+          Curated resources recommended by experienced educators and chemistry experts.
           Organised from foundational to advanced.
         </p>
       </div>
