@@ -6,7 +6,6 @@ import { Resources } from './components/Resources';
 import { DataBooklet } from './components/DataBooklet';
 import { PracticePapers } from './components/PracticePapers';
 import { Tips } from './components/Tips';
-import { DarkModeToggle } from './components/DarkModeToggle';
 import { SearchButton } from './components/SearchButton';
 import { SearchModal } from './components/SearchModal';
 import { SearchResult } from './data/searchIndex';
@@ -24,22 +23,35 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('darkMode');
-    if (saved !== null) return JSON.parse(saved);
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // Initialize dark mode on mount
   useEffect(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved !== null) {
+      setIsDark(JSON.parse(saved));
+    } else {
+      setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    setMounted(true);
+  }, []);
+
+  // Update DOM when isDark changes
+  useEffect(() => {
+    if (!mounted) return;
+    
     localStorage.setItem('darkMode', JSON.stringify(isDark));
     if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [isDark]);
+  }, [isDark, mounted]);
 
-  const toggleDarkMode = () => setIsDark(!isDark);
+  const toggleDarkMode = () => {
+    setIsDark(prev => !prev);
+  };
 
   // Handle keyboard shortcuts
   useEffect(() => {
@@ -123,10 +135,13 @@ export default function App() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
+              
+              {/* Dark Mode Toggle */}
               <button
                 onClick={toggleDarkMode}
                 className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={isDark ? 'Light mode' : 'Dark mode'}
               >
                 {isDark ? (
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -138,6 +153,7 @@ export default function App() {
                   </svg>
                 )}
               </button>
+
               <button
                 className="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
