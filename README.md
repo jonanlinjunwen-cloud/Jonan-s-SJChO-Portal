@@ -1,2 +1,2 @@
-# Jonan-s-SJChO-Portal
+# Jonan's SJChO Portal
 haha
